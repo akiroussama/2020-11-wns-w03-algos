@@ -9,11 +9,15 @@
  */
 
 // ↓ uncomment bellow lines and add your response!
-/*
 export default function ({ groups }: { groups: Group[] }): GroupWithSills[] {
-    return [];
+    return groups.map(group => ({
+        ...group, skills: group.students
+            .reduce((skills, student) =>
+                skills.concat(student.skills.filter(s => skills.indexOf(s) === -1))
+                , [] as string[])
+            .sort()
+    }));
 }
-*/
 
 // used interfaces, do not touch
 interface Student {

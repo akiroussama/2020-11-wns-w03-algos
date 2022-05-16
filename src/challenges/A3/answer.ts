@@ -10,11 +10,11 @@
 */
 
 // ↓ uncomment bellow lines and add your response!
-/*
-export default function ({ lastActivityDatetime, messages } : { lastActivityDatetime: string, messages: Message[] }): MessageWithUnread[] {
-    return [];
+export default function ({ lastActivityDatetime, messages }: { lastActivityDatetime: string, messages: Message[] }): MessageWithUnread[] {
+    return messages
+        .sort((a, b) => a.sentAt > b.sentAt ? 1 : -1)
+        .map(message => ({ ...message, unread: message.sentAt > lastActivityDatetime }));
 }
-*/
 
 // used interfaces, do not touch
 export interface Message {

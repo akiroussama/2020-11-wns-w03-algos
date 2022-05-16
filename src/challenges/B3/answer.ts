@@ -9,18 +9,33 @@
  */
 
 // ↓ uncomment bellow lines and add your response!
-/*
-export default function ({ groups }: { groups: GroupWithSills[] }): GroupWithSillsAndClosestGroups[] {
-    return [];
+export default function ({ groups }: { groups: GroupWithSkills[] }): GroupWithSkillsAndClosestGroups[] {
+    return groups.map(group => {
+        return {
+            ...group,
+            closestGroups: groups
+                .filter(g => g.name !== group.name)
+                .reduce((bestMatches, currentGroup) => {
+                    const count = currentGroup.skills.filter(skill => group.skills.includes(skill)).length;
+                    if (bestMatches.length === 0 || bestMatches[0].count < count) {
+                        bestMatches = [{ group: currentGroup, count }];
+                    } else if (bestMatches.length > 0 && bestMatches[0].count === count) {
+                        bestMatches.push({ group: currentGroup, count });
+                    }
+                    return bestMatches;
+                 }, [] as any)
+                .map(bestMatch => bestMatch.group)
+                .sort()
+        };
+    });
 }
-*/
 
 // used interfaces, do not touch
-export interface GroupWithSills {
+export interface GroupWithSkills {
     name: string;
     skills: string[];
 }
 
-export interface GroupWithSillsAndClosestGroups extends GroupWithSills {
-    closestGroups: GroupWithSills[];
+export interface GroupWithSkillsAndClosestGroups extends GroupWithSkills {
+    closestGroups: GroupWithSkills[];
 }

@@ -7,11 +7,11 @@
  */
 
 // ↓ uncomment bellow lines and add your response!
-/*
 export default function ({ events }: { events: EventWithCategory[] }): string[] {
-    return [];
+    return events
+        .reduce((categories, event) => categories.concat(event.categories.filter(c => categories.indexOf(c) === -1)), [] as string[])
+        .sort();
 }
-*/
 
 // used interfaces, do not touch
 export interface EventWithCategory {

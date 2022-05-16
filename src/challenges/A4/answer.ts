@@ -27,11 +27,25 @@
  */
 
 // ↓ uncomment bellow lines and add your response!
-/*
 export default function ({ messages }: { messages: Message[] }): DayMessages[] {
-    return [];
+    const daysMap = {};
+    for (const message of messages) {
+        const d = new Date(message.sentAt);
+        d.setUTCHours(0);
+        d.setUTCMinutes(0);
+        d.setUTCSeconds(0);
+        d.setUTCMilliseconds(0);
+        const dAsString = d.toISOString();
+        if (daysMap[dAsString] === undefined) {
+            daysMap[dAsString] = [];
+        }
+        daysMap[dAsString].push(message);
+    }
+    return Object.keys(daysMap).sort().map(m => ({
+        day: m,
+        messages: daysMap[m].sort((a, b) => a.sentAt > b.sentAt ? 1 : -1)
+    }));
 }
-*/
 
 // used interfaces, do not touch
 export interface Message {
