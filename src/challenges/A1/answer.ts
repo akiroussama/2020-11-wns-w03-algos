@@ -7,11 +7,9 @@
  */
 
 // ↓ uncomment bellow lines and add your response!
-/*
 export default function ({ students }: { students: Student[] }): Student[] {
-    return [];
+    return students.sort((a, b) => a.age > b.age ? 1 : (a.age === b.age ? (a.name > b.name ? 1 : -1) : -1));
 }
-*/
 
 // used interfaces, do not touch
 export interface Student {
